@@ -372,16 +372,16 @@ Extends the Feature 2 single-view lists dashboard. List CRUD (add/rename/delete 
 
 | Story | Scenario | Test file | Test name |
 |-------|----------|-----------|-----------|
-| US-3.1 | User adds a todo to a list via dialog | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.test.js` | `User adds a todo to a list via dialog` |
-| US-3.1 | User adds a todo with an empty title | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.test.js` | `User adds a todo with an empty title` |
-| US-3.1 | Add item is only available inside the items dialog | `frontend/tests/Dashboard.test.js` | `Add item is only available inside the items dialog` |
-| US-3.2 | List items dialog shows empty state | `frontend/tests/Dashboard.test.js` | `List items dialog shows empty state` |
-| US-3.2 | User opens items for different lists | `frontend/tests/Dashboard.test.js` | `User opens items for different lists` |
+| US-3.1 | User adds a todo to a list via dialog | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.items.test.js` | `User adds a todo to a list via dialog` |
+| US-3.1 | User adds a todo with an empty title | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.items.test.js` | `User adds a todo with an empty title` |
+| US-3.1 | Add item is only available inside the items dialog | `frontend/tests/Dashboard.items.test.js` | `Add item is only available inside the items dialog` |
+| US-3.2 | List items dialog shows empty state | `frontend/tests/Dashboard.items.test.js` | `List items dialog shows empty state` |
+| US-3.2 | User opens items for different lists | `frontend/tests/Dashboard.items.test.js` | `User opens items for different lists` |
 | US-3.2 | User only sees their own todos when opening items | `backend/tests/todos.test.js` | `User only sees their own todos when opening items` |
-| US-3.3 | User marks a todo as complete | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.test.js` | `User marks a todo as complete` |
-| US-3.3 | User marks a completed todo as incomplete | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.test.js` | `User marks a completed todo as incomplete` |
-| US-3.4 | User edits a todo title | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.test.js` | `User edits a todo title` |
-| US-3.4 | User deletes a todo | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.test.js` | `User deletes a todo` |
+| US-3.3 | User marks a todo as complete | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.items.test.js` | `User marks a todo as complete` |
+| US-3.3 | User marks a completed todo as incomplete | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.items.test.js` | `User marks a completed todo as incomplete` |
+| US-3.4 | User edits a todo title | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.items.test.js` | `User edits a todo title` |
+| US-3.4 | User deletes a todo | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.items.test.js` | `User deletes a todo` |
 | US-3.5 | User cannot read todos in another user's list | `backend/tests/todos.test.js` | `User cannot read todos in another user's list` |
 | US-3.5 | User attempts to add a todo to another user's list | `backend/tests/todos.test.js` | `User attempts to add a todo to another user's list` |
 | US-3.5 | User attempts to rename another user's todo | `backend/tests/todos.test.js` | `User attempts to rename another user's todo` |
@@ -432,3 +432,4 @@ Do not implement behavior not in this spec.
 *   Search or filter across todos
 *   Bulk complete / bulk delete
 *   Archive completed todos
+
