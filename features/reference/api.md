@@ -14,3 +14,7 @@ Session payload: userId, username, email, fName, lName, role, token. No password
 ## Feature 2
 
 POST /lists creates a caller-owned list; PUT /lists/:listId renames it; DELETE /lists/:listId deletes it. Names are trimmed, required and at most 100 characters. Invalid IDs return 400. Unknown or unowned lists return 404 with `List with id=<id> not found.`. Caller-supplied userId is ignored.
+
+## Feature 3
+
+GET/POST /lists/:listId/todos list or create items in an owned list. PUT/DELETE /todos/:id update or delete an owned item. Titles are trimmed, required, max 255 characters. New items are incomplete. Updates allow title and completed only; completed must be boolean. Ownership fields are ignored. Cross-user access to lists/items returns 404.

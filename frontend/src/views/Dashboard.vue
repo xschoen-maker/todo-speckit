@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import Lists from "../services/listServices.js";
+import ItemsDialog from "../components/ItemsDialog.vue";
+const itemsList = ref(null);
 const lists = ref([]), loading = ref(false), saving = ref(false), error = ref("");
 const dialog = ref(false), mode = ref("create"), selected = ref(null), name = ref(""), form = ref(null);
 const nameRules = [v => !!v?.trim() || "List name is required.", v => !v || v.trim().length <= 100 || "List name must be 100 characters or fewer."];
@@ -28,6 +30,7 @@ onMounted(loadLists);
 </script>
 <template>
   <v-container class="py-8" max-width="960">
+    <ItemsDialog :list="itemsList" @close="itemsList = null" />
     <v-card elevation="2">
       <v-card-item>
         <h1 class="text-h4">My Lists</h1>
@@ -40,6 +43,7 @@ onMounted(loadLists);
         <v-list v-else>
           <v-list-item v-for="list in lists" :key="list.id" :title="list.name" :data-list-id="list.id" border rounded="lg" class="mb-2">
             <template #append>
+              <v-btn icon="mdi-format-list-checks" size="small" variant="text" :aria-label="`View items for ${list.name}`" @click="itemsList = list" />
               <v-btn icon="mdi-pencil-outline" size="small" variant="text" aria-label="Edit list" @click="openList('edit', list)" />
               <v-btn icon="mdi-delete-outline" size="small" variant="text" aria-label="Delete list" @click="openList('delete', list)" />
             </template>
