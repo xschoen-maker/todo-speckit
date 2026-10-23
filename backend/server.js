@@ -41,6 +41,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/todo", routes);
+app.use((error, _req, res, _next) => {
+  logger.error(error.message);
+  const status = error.status === 400 ? 400 : 500;
+  res.status(status).send({ message: status === 400 ? "Invalid request body." : "Unable to complete request." });
+});
 
 const PORT = process.env.PORT || 3200;
 

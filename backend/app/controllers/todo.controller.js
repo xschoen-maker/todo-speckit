@@ -1,4 +1,5 @@
 import db from "../models/index.js";
+import { isValidDueDate } from "../utils/dueDate.js";
 import { getAccessibleListOrNull, getAccessibleTodoOrNull } from "../authorization/authorization.js";
 const titleError = title => typeof title !== "string" || !title.trim()
   ? "Todo title is required." : title.trim().length > 255 ? "Todo title must be 255 characters or fewer." : null;
@@ -20,13 +21,19 @@ controller.create = async (req, res, next) => {
   try {
     const list = await resolve(req, res, "List"); if (!list) return;
     const message = titleError(req.body.title); if (message) return res.status(400).send({ message });
-    res.status(201).send(await db.todo.create({ title: req.body.title.trim(), completed: false, listId: list.id, userId: req.user.id }));
+    const dueDate = Object.hasOwn(req.body, "dueDate") ? req.body.dueDate : null;
+    if (!isValidDueDate(dueDate)) return res.status(400).send({ message: "Due date must be a valid date in YYYY-MM-DD format." });
+    res.status(201).send(await db.todo.create({ title: req.body.title.trim(), dueDate, completed: false, listId: list.id, userId: req.user.id }));
   } catch (error) { next(error); }
 };
 controller.update = async (req, res, next) => {
   try {
     const row = await resolve(req, res, "Todo"); if (!row) return;
     const data = {};
+    if (Object.hasOwn(req.body, "dueDate")) {
+      if (!isValidDueDate(req.body.dueDate)) return res.status(400).send({ message: "Due date must be a valid date in YYYY-MM-DD format." });
+      data.dueDate = req.body.dueDate;
+    }
     if (Object.hasOwn(req.body, "title")) {
       const message = titleError(req.body.title); if (message) return res.status(400).send({ message });
       data.title = req.body.title.trim();

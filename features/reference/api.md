@@ -22,3 +22,7 @@ GET/POST /lists/:listId/todos list or create items in an owned list. PUT/DELETE 
 ## Feature 4
 
 GET /users/:id fetches the caller's own profile; PUT /users/:id updates required fName/lName/email/username and optional password. Responses include id, names, username, email, role and timestamps, never password. Omitted password is unchanged. Passwords supplied must have at least 8 characters and are rehashed at cost 10. Duplicate username/email return 400; cross-user IDs return 404. Role cannot be changed.
+
+## Feature 5
+
+Todo create/update accept optional dueDate in YYYY-MM-DD format or null. GET includes dueDate. Invalid calendar dates return 400 with `Due date must be a valid date in YYYY-MM-DD format.`. Omitted dueDate on update is unchanged; explicit null clears it. Ownership and ordering remain unchanged.

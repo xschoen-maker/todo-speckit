@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "cross-env APP_ENV=development vite",
-    "build": "cross-env APP_ENV=production vite build",
+    "dev": "cross-env APP_ENV=development vite --configLoader runner",
+    "build": "cross-env APP_ENV=production vite build --configLoader runner",
     "bundle": "node scripts/copy-htaccess.mjs",
     "preview": "vite preview",
     "test": "vitest run --configLoader runner",

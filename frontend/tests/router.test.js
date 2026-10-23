@@ -15,3 +15,10 @@ describe("Feature 1 — Router guards", () => {
     });
   });
 });
+describe("Feature 2 — Todo list management", () => {
+  describe("US-2.5 — Private lists only", () => {
+    it("Unauthenticated user accesses the dashboard", async () => {
+      await router.push("/register"); await router.push("/"); expect(router.currentRoute.value.name).toBe("login");
+    });
+  });
+});
