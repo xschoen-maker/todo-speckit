@@ -7,3 +7,5 @@
 Associations are registered in backend/app/models/index.js. Local runtime and test databases are separate.
 
 Feature 2 implements management of the existing lists table. Ownership never changes. Reads, updates and deletes include userId; getAccessibleListOrNull centralizes lookup.
+
+Feature 3: todos contain id, title (255), completed (default false), listId, userId and timestamps. List hasMany Todo with CASCADE deletion; Todo belongsTo List and User. User hasMany Todo. Shared access helper checks both task and parent-list ownership.

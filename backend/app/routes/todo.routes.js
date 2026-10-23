@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { authenticate } from "../authorization/authorization.js";
+import controller from "../controllers/todo.controller.js";
+const router = Router();
+router.use(authenticate);
+router.get("/lists/:listId/todos", controller.findAll);
+router.post("/lists/:listId/todos", controller.create);
+router.put("/todos/:id", controller.update);
+router.delete("/todos/:id", controller.remove);
+export default router;
