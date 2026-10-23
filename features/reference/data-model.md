@@ -5,3 +5,5 @@
 - lists: id, name (100), userId, timestamps. Belongs to User. Present for Feature 1's required real list-isolation test; management comes in Feature 2.
 
 Associations are registered in backend/app/models/index.js. Local runtime and test databases are separate.
+
+Feature 2 implements management of the existing lists table. Ownership never changes. Reads, updates and deletes include userId; getAccessibleListOrNull centralizes lookup.

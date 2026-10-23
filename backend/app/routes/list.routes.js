@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { authenticate } from "../authorization/authorization.js";
+import controller from "../controllers/list.controller.js";
+const router = Router();
+router.use(authenticate);
+router.get("/", controller.findAll);
+router.post("/", controller.create);
+router.put("/:listId", controller.update);
+router.delete("/:listId", controller.remove);
+export default router;
