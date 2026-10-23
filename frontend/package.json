@@ -8,7 +8,7 @@
     "build": "cross-env APP_ENV=production vite build",
     "bundle": "node scripts/copy-htaccess.mjs",
     "preview": "vite preview",
-    "test": "vitest run",
+    "test": "vitest run --configLoader runner",
     "test:watch": "vitest"
   },
   "dependencies": {
