@@ -14,6 +14,42 @@ beforeEach(async () => {
 });
 afterAll(() => db.sequelize.close());
 const call = (method, path, body) => request(app)[method](`/todo${path}`).auth(a.token, { type: "bearer" }).send(body);
+describe("Feature 5 — Todo due dates (features/feature-5-todo-due-date.md)", () => {
+  describe("US-5.1 — Set a due date when creating a todo", () => {
+    it("User adds a todo with a due date", async () => {
+      const res = await call("post", `/lists/${list.id}/todos`, { title: "Dated", dueDate: "2026-07-15" });
+      expect(res.status).toBe(201); expect(res.body.dueDate).toBe("2026-07-15");
+      expect((await call("get", `/lists/${list.id}/todos`)).body.find(t => t.id === res.body.id).dueDate).toBe("2026-07-15");
+    });
+    it("User adds a todo without a due date", async () => {
+      const res = await call("post", `/lists/${list.id}/todos`, { title: "Undated" }); expect(res.status).toBe(201); expect(res.body.dueDate).toBeNull();
+    });
+    it("API rejects an invalid due date on create", async () => {
+      for (const dueDate of ["not-a-date", "2026-02-30", "2026-99-99", "", 123]) {
+        const res = await call("post", `/lists/${list.id}/todos`, { title: "Bad", dueDate });
+        expect(res.status).toBe(400); expect(res.body.message).toBe("Due date must be a valid date in YYYY-MM-DD format.");
+      }
+      expect(await db.todo.count()).toBe(1);
+    });
+  });
+  describe("US-5.3 — Edit or clear a due date", () => {
+    it("User sets a due date when editing a todo", async () => {
+      const res = await call("put", `/todos/${todo.id}`, { dueDate: "2026-07-20" }); expect(res.status).toBe(200); expect(res.body.dueDate).toBe("2026-07-20");
+      const omitted = await call("put", `/todos/${todo.id}`, { title: "Keep date" }); expect(omitted.body.dueDate).toBe("2026-07-20");
+    });
+    it("User clears a due date when editing a todo", async () => {
+      await todo.update({ dueDate: "2026-07-20" }); const res = await call("put", `/todos/${todo.id}`, { dueDate: null }); expect(res.body.dueDate).toBeNull();
+    });
+    it("API rejects an invalid due date on update", async () => {
+      await todo.update({ dueDate: "2026-07-20" }); const res = await call("put", `/todos/${todo.id}`, { dueDate: "2026-99-99" }); expect(res.status).toBe(400);
+      expect((await db.todo.findByPk(todo.id)).dueDate).toBe("2026-07-20");
+    });
+    it("User cannot set due date on another user's todo", async () => {
+      const row = await db.todo.create({ title: "Hidden", listId: otherList.id, userId: b.userId });
+      expect((await call("put", `/todos/${row.id}`, { dueDate: "2026-07-15" })).status).toBe(404); expect((await db.todo.findByPk(row.id)).dueDate).toBeNull();
+    });
+  });
+});
 describe("Feature 3 — Todo list items", () => {
   describe("US-3.1 — Add tasks to a list", () => {
     it("User adds a todo to a list via dialog", async () => {

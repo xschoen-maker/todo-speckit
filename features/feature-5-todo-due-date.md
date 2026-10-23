@@ -285,15 +285,15 @@ Each scenario above must map to at least one automated test.
 
 | Story | Scenario | Test file | Test name |
 |-------|----------|-----------|-----------|
-| US-5.1 | User adds a todo with a due date | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.test.js` | `User adds a todo with a due date` |
+| US-5.1 | User adds a todo with a due date | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.items.test.js` | `User adds a todo with a due date` |
 | US-5.1 | User adds a todo without a due date | `backend/tests/todos.test.js` | `User adds a todo without a due date` |
 | US-5.1 | API rejects an invalid due date on create | `backend/tests/todos.test.js` | `API rejects an invalid due date on create` |
-| US-5.3 | User sets a due date when editing a todo | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.test.js` | `User sets a due date when editing a todo` |
-| US-5.3 | User clears a due date when editing a todo | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.test.js` | `User clears a due date when editing a todo` |
+| US-5.3 | User sets a due date when editing a todo | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.items.test.js` | `User sets a due date when editing a todo` |
+| US-5.3 | User clears a due date when editing a todo | `backend/tests/todos.test.js`, `frontend/tests/Dashboard.items.test.js` | `User clears a due date when editing a todo` |
 | US-5.3 | API rejects an invalid due date on update | `backend/tests/todos.test.js` | `API rejects an invalid due date on update` |
 | US-5.3 | User cannot set due date on another user's todo | `backend/tests/todos.test.js` | `User cannot set due date on another user's todo` |
-| US-5.4 | Incomplete todo past due date is styled as overdue | `frontend/tests/Dashboard.test.js` | `Incomplete todo past due date is styled as overdue` |
-| US-5.4 | Completed todo past due date is not styled as overdue | `frontend/tests/Dashboard.test.js` | `Completed todo past due date is not styled as overdue` |
+| US-5.4 | Incomplete todo past due date is styled as overdue | `frontend/tests/Dashboard.items.test.js` | `Incomplete todo past due date is styled as overdue` |
+| US-5.4 | Completed todo past due date is not styled as overdue | `frontend/tests/Dashboard.items.test.js` | `Completed todo past due date is not styled as overdue` |
 
 ---
 
@@ -317,13 +317,13 @@ Do not implement behavior not in this spec.
 
 ## Definition of Done
 
-*   [ ] Backend and frontend implemented per this spec (**FR-00N** satisfied)
-*   [ ] **Success Criteria (SC-00N)** met
-*   [ ] All mapped tests pass (`npm test`)
-*   [ ] Test Coverage Map complete
-*   [ ] `features/reference/data-model.md` updated
-*   [ ] `features/reference/api.md` updated
-*   [ ] `features/reference/behavior.md` updated (if product rules changed)
+*   [x] Backend and frontend implemented per this spec (**FR-00N** satisfied)
+*   [x] **Success Criteria (SC-00N)** met
+*   [x] All mapped tests pass (`npm test`)
+*   [x] Test Coverage Map complete
+*   [x] `features/reference/data-model.md` updated
+*   [x] `features/reference/api.md` updated
+*   [x] `features/reference/behavior.md` updated (if product rules changed)
 
 ---
 

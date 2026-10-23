@@ -9,3 +9,5 @@ Feature 2: lists are shown in one My Lists view with + New List, Edit list and D
 Feature 3: each list row has an Items icon. Its dialog fetches only that list's tasks, with nested add/edit/delete dialogs. Completion persists; completed titles are struck through. Tasks sort incomplete first then creation time. Deleting a list removes all its tasks. Empty/loading/error states are displayed. Add Item is absent from the main lists view.
 
 Feature 4 replaces standalone Sign out with a profile icon/dropdown showing full name, username and email. Edit Profile opens a prefilled dialog with required identity fields, optional new password/confirmation, Save/Cancel, validation and loading/error states. Save updates localStorage while retaining token/userId. Log out appears only in the dropdown.
+
+Feature 5 adds optional date fields to the add/edit-item dialogs and formats dates in item rows. Empty input saves null. Incomplete tasks dated before today in the browser local calendar use error-colored date text; completed tasks do not. Date-only values have no timezone conversion. Sorting remains incomplete-first/creation order.

@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch } from "vue";
 import Todos from "../services/todoServices.js";
+import { optionalDueDateRules, formatDueDate, isTodoOverdue } from "../config/validation.js";
+const dueDate = ref("");
 const props = defineProps({ list: Object });
 const emit = defineEmits(["close"]);
 const todos = ref([]), loading = ref(false), saving = ref(false), error = ref("");
@@ -15,6 +17,7 @@ async function load() {
 }
 watch(() => props.list, () => { dialog.value = false; load(); }, { immediate: true });
 function open(action, todo = null) {
+  dueDate.value = todo?.dueDate || "";
   mode.value = action; selected.value = todo; title.value = todo?.title || ""; error.value = ""; dialog.value = true;
 }
 async function save() {
@@ -22,8 +25,8 @@ async function save() {
   saving.value = true; error.value = "";
   try {
     if (mode.value === "delete") await Todos.deleteTodo(selected.value.id);
-    else if (mode.value === "edit") await Todos.updateTodo(selected.value.id, { title: title.value.trim() });
-    else await Todos.createTodo(props.list.id, { title: title.value.trim() });
+    else if (mode.value === "edit") await Todos.updateTodo(selected.value.id, { title: title.value.trim(), dueDate: dueDate.value || null });
+    else await Todos.createTodo(props.list.id, { title: title.value.trim(), dueDate: dueDate.value || null });
     dialog.value = false; await load();
   } catch (e) { error.value = e.response?.data?.message || "Unable to save todo."; }
   finally { saving.value = false; }
@@ -50,6 +53,7 @@ async function toggle(todo, completed) {
           <v-list-item v-for="todo in todos" :key="todo.id" :data-todo-id="todo.id" border rounded="lg" class="mb-2">
             <template #prepend><v-checkbox-btn :model-value="todo.completed" :aria-label="`Complete ${todo.title}`" :disabled="saving" @update:model-value="v => toggle(todo, v)" /></template>
             <span :class="{ 'text-decoration-line-through text-medium-emphasis': todo.completed }">{{ todo.title }}</span>
+            <div v-if="todo.dueDate" data-testid="due-date" class="text-body-2" :class="{ 'text-error': isTodoOverdue(todo) }">Due {{ formatDueDate(todo.dueDate) }}</div>
             <template #append>
               <v-btn icon="mdi-pencil-outline" size="small" variant="text" aria-label="Edit todo" @click="open('edit', todo)" />
               <v-btn icon="mdi-delete-outline" size="small" variant="text" aria-label="Delete todo" @click="open('delete', todo)" />
@@ -64,7 +68,10 @@ async function toggle(todo, completed) {
           <v-card-text>
             <v-alert v-if="error" type="error" class="mb-4">{{ error }}</v-alert>
             <p v-if="mode === 'delete'">Delete “{{ selected?.title }}”?</p>
-            <v-form v-else ref="form" @submit.prevent="save"><v-text-field v-model="title" label="Todo title" :rules="rules" autofocus /></v-form>
+            <v-form v-else ref="form" @submit.prevent="save">
+              <v-text-field v-model="title" label="Todo title" :rules="rules" autofocus />
+              <v-text-field v-model="dueDate" label="Due date (optional)" type="date" :rules="optionalDueDateRules" clearable />
+            </v-form>
           </v-card-text>
           <v-card-actions>
             <v-btn color="secondary" :disabled="saving" @click="dialog = false">Cancel</v-btn>
