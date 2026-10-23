@@ -1,14 +1,5 @@
-# Behavior & Rules Reference
+# Current behavior
 
-**Living snapshot** of product rules currently in force on `dev`.
+Feature 1: register and sign in with username/password, persist session under localStorage key user, welcome the user on the protected home page, sign out and invalidate the server session. Auth pages and home have no MenuBar yet. Required fields, email format, password length and confirmation are validated before submitting. Axios attaches the Bearer token and clears the local session on 401. Unauthenticated navigation redirects to login.
 
-Empty until Feature 1+ ships. See the OC CS Speckit repo’s `features/reference/behavior.md` for the intended shape (rule → enforcement → provenance).
-
-These files answer: *"What rules does the app enforce right now?"*  
-They do **not** authorize new scope — implement only from `features/feature-*.md`.
-
-| File | Role |
-|------|------|
-| [api.md](./api.md) | Routes / payloads |
-| [data-model.md](./data-model.md) | Tables / columns |
-| **This file** | Ownership, sort, validation, UI rules |
+Feature 1's explicit GET /todo/lists acceptance test uses real owned rows; only the signed-in user's lists are returned. Full list management remains Feature 2.
