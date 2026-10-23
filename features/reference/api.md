@@ -18,3 +18,7 @@ POST /lists creates a caller-owned list; PUT /lists/:listId renames it; DELETE /
 ## Feature 3
 
 GET/POST /lists/:listId/todos list or create items in an owned list. PUT/DELETE /todos/:id update or delete an owned item. Titles are trimmed, required, max 255 characters. New items are incomplete. Updates allow title and completed only; completed must be boolean. Ownership fields are ignored. Cross-user access to lists/items returns 404.
+
+## Feature 4
+
+GET /users/:id fetches the caller's own profile; PUT /users/:id updates required fName/lName/email/username and optional password. Responses include id, names, username, email, role and timestamps, never password. Omitted password is unchanged. Passwords supplied must have at least 8 characters and are rehashed at cost 10. Duplicate username/email return 400; cross-user IDs return 404. Role cannot be changed.
