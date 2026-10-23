@@ -1,15 +1,12 @@
-# API Reference
+# Current API
 
-**Status:** empty starter — no application endpoints yet.
+All paths are under `/todo`. Success bodies are flat JSON; errors are `{ "message": "..." }`.
 
-API mount path defaults to `/api` (see `backend/server.js`). Update this file when endpoints merge to `dev`.
+| Method | Path | Behavior |
+|---|---|---|
+| POST | /register | Required names, valid email, username, password of at least 8 characters. Returns 201 and session payload. |
+| POST | /login | Username/password; returns 200 and reuses a live session. |
+| POST | /logout | Bearer authentication; deletes the current session. |
+| GET | /lists | Bearer authentication; returns caller-owned lists sorted by name. Included to satisfy Feature 1's explicit protected-list scenario. |
 
-## Endpoints
-
-*(none)*
-
-## Conventions
-
-- Flat JSON responses (no `{ success, data }` envelope).
-- Errors: `{ "message": "..." }`.
-- Authenticated routes: `Authorization: Bearer <token>` (when Feature auth is implemented).
+Session payload: userId, username, email, fName, lName, role, token. No password hash is returned. Missing/invalid/expired authentication returns 401.
