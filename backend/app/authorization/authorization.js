@@ -9,6 +9,8 @@ export const getAccessibleListOrNull = (req, listId) =>
 export const getAccessibleTodoOrNull = (req, id) =>
   db.todo.findOne({ where: { id, userId: req.user.id },
     include: [{ model: db.list, required: true, where: { userId: req.user.id } }] });
+export const getAccessibleUserOrNull = (req, id) =>
+  db.user.findOne({ where: { id, [db.Sequelize.Op.and]: { id: req.user.id } } });
 
 export async function authenticate(req, res, next) {
   try {
