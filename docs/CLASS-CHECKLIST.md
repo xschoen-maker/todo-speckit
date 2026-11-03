@@ -17,7 +17,7 @@ Completed locally on October 23, 2026 using the course Todo specs, Vue 3/Vuetify
 - [ ] Demonstrate the app to the professor or GA.
 - [ ] Submit the repository link when the student decides to turn it in.
 
-The student's latest instruction is to keep remaining work local and submit nothing. Features 1–4 were pushed before that instruction; Feature 5 and the final audit remain local. GitHub is not automatically synchronized.
+Reverified November 2, 2026: all 63 backend tests, all 49 frontend tests, and the production build pass. Features 1–5 are pushed to GitHub on their feature branches and merged into dev; main remains scaffold-only. The Canvas submission is left to the student.
 
 ## Specification notes
 
